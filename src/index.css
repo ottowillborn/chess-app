@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  min-height: 100vh;
+  
+}
+
+h1 {
+  margin: 2rem;
+}
+
+.board {
+  background: #000000;
+  width: 500px;
+  height: 500px;
+  display: grid;
+  grid-template: repeat(8, 1fr) / repeat(8, 1fr);
+
+}
+
+button {
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.square {
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+
+
+.black[src='dark'] {
+  background-color: dimgray;
+  color: rgb(0, 0, 0);
+}
+
+.green[src='light'] {
+  background-color: rgb(22, 80, 48);
+  color: rgb(255, 255, 255);
+}
+
+.black[src='light'] {
+  background-color: dimgray;
+  color: rgb(255, 255, 255);
+}
+
+.green[src='dark'] {
+  background-color: rgb(22, 80, 48);
+  color: rgb(0, 0, 0);
+}
+
+.black {
+  background-color: dimgray;
+}
+
+.green {
+  background-color: rgb(22, 80, 48);
+}
+
+.yellow {
+  background-color: rgb(223, 212, 116);
+}
+
+
+.info-wrapper {
+  display: flex;
+ 
+}
+
+h3 {
+  padding: 1rem;
+}
+
+li {
+  list-style: none;
+}
+
+.info-wrapper button {
+  background: #272727;
+  color: rgb(68, 44, 44);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  
+}
