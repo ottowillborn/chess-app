@@ -10,46 +10,41 @@ let gameStats = class{
     this.board = CreateStartingLayout();
     this.prevBoard = [];
   }
-  updateBoard(newBoard){
-    this.board = newBoard;
-  }
-  updatePrevBoard(newBoard){
-    this.prevBoard = newBoard;
-  }
+ 
 };
 
 const Game = () => {
-  const stats = new gameStats();
+ const boardLayout = CreateStartingLayout();
   const [firstClick, setFirstClick] = useState(true);
   const[currentBoard, setCurrentBoard] = useState(CreateStartingLayout());
-  const[highlightedBoard, setHighlightedBoard] = useState(currentBoard);
   const[clickedPiece, setClickedPiece] = useState(currentBoard[0]);
   const[prevIndex, setPrevIndex] = useState(0);
-  const[prevBoard, setPrevBoard] = useState(CreateStartingLayout());
- 
+
   
+ 
+  const resetColors = (board) =>{
+    for (let i = 0; i < board.length; i++) {
+      board[i].color = boardLayout[i].color;
+    }
+  }
 
   const handleFirstClick = (i) => {
-    setPrevIndex(i);
-    stats.turn = stats.turn+1;
-    console.log(stats.turn)
-    setPrevBoard(currentBoard);
-    setClickedPiece(currentBoard[i]);
-    console.log(prevBoard[16]);
+    setPrevIndex(i); //store previous index for use in handleSecondClick
+    setClickedPiece(currentBoard[i]);//store clicked piece for use in handleSecondClick
   
-    highlightedBoard[i+8].color = 'yellow';
-    setHighlightedBoard(highlightedBoard)
-    console.log(prevBoard[16]);
+    currentBoard[i+8].color = 'yellow';
     setFirstClick(!firstClick);
     return;
   };
 
   const handleSecondClick = (i) => {
-    setCurrentBoard(prevBoard);
+    /* ANY UPDATES TO "currentBoard" WILL BE REACTIVELY DISPLAYED */
+    resetColors(currentBoard); //removes all highlights
+    
     currentBoard[i].pieceName = clickedPiece.pieceName;
     currentBoard[i].pieceColor = clickedPiece.pieceColor;
     currentBoard[prevIndex].pieceName = '';
-    setCurrentBoard(currentBoard);
+    
     setFirstClick(!firstClick);
     return;
   };
@@ -60,7 +55,7 @@ const Game = () => {
   return (
     <>
       <h1>Chess</h1>
-      <Board squares={firstClick ? highlightedBoard : currentBoard} onClick={firstClick ? handleFirstClick : handleSecondClick} />
+      <Board squares={currentBoard} onClick={firstClick ? handleFirstClick : handleSecondClick} />
       <div className="info-wrapper">
     
       </div>
