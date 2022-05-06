@@ -39,7 +39,7 @@ const Game = () => {
   };
 
   const isOnBoard = (index) =>{
-    if (index>=0 && index<=63){
+    if ((index>=0) && (index<=63)){
       return true;
     }else{
         return false;
@@ -147,7 +147,35 @@ const Game = () => {
     }
 
     if(currentPiece.pieceName === 'knight'){
+      const moves = [index+6, index+10, index+15, index+17, index-6, index-10, index-15, index-17];
+      const possibleMoves = [];
+      moves.forEach(move => {
+        if(isOnBoard(move)){
+          possibleMoves.push(move);
+        }
+      });
       
+      moves.length = 0;
+      possibleMoves.forEach(move => {
+        if(currentBoard[move].pieceColor !== currentPiece.pieceColor){
+          moves.push(move);
+        }
+      });
+
+      possibleMoves.length = 0;
+      moves.forEach(move => {
+        const startColumn = index%8;
+        const endColumn = move%8;
+        console.log(startColumn+" "+endColumn);
+        if(startColumn-endColumn <= 2 && startColumn-endColumn >= -2){
+          possibleMoves.push(move);
+        }
+      });
+    
+      possibleMoves.forEach(move => {
+        currentBoard[move].color = 'yellow';
+      });
+      return;
     }
 
     if(currentPiece.pieceName === 'bishop'){
@@ -157,14 +185,14 @@ const Game = () => {
     if(currentPiece.pieceName === 'king'){
       
     }
-    
+
     if(currentPiece.pieceName === 'queen'){
       
     }
   };
 
   const handleFirstClick = (i) => {
-    
+    console.log(i);
     setPrevIndex(i); //store previous index for use in handleSecondClick
     setFirstClickedPiece(currentBoard[i]);//store clicked piece for use in handleSecondClick
     displayPossibleMoves(i);
@@ -195,6 +223,7 @@ const Game = () => {
     currentBoard[i].pieceColor = firstClickedPiece.pieceColor;
     currentBoard[i].firstTurn = firstClickedPiece.firstTurn;
     currentBoard[prevIndex].pieceName = '';
+    currentBoard[prevIndex].pieceColor = '';
     }else{
       setFirstClick(!firstClick);
       return;
