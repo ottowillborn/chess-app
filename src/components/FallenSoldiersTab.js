@@ -1,10 +1,10 @@
 
-import Square from "./Square";
+import FallenSoldier from "./FallenSoldier";
 
 const FallenSoldiersTab = ({ soldiers, color, onClick}) => (
     <div className={color}>
         {soldiers.map((square, i) => (
-            <Square key={i} square={square} onClick={() => onClick(i)} />
+            <FallenSoldier key={i} square={square} onClick={() => onClick(i)} />
         ))}
     </div>
 );

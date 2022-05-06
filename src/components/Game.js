@@ -307,12 +307,12 @@ const Game = () => {
       <h1>Chess</h1>
       <Board squares={currentBoard} onClick={firstClick ? handleFirstClick : handleSecondClick} />
       <div>
-      <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel' onClick={handleCapturedClick}>White Fallen Soldiers</FallenSoldiersTab>
-      </div>
-      <div>
-      <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel' onClick={handleCapturedClick}>Black Fallen Soldiers</FallenSoldiersTab>
-      </div>
+      <label>White Fallen Soldiers</label>
+      <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
+      <label>Black Fallen Soldiers</label>
+      <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
       <label className={playerTurn === '+' ? 'whitelabel' : 'blacklabel'}>It is {playerTurn === '+' ? 'white' : 'black'}'s turn</label>
+      </div>
     </>
   );
 };
