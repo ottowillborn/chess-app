@@ -179,7 +179,63 @@ const Game = () => {
     }
 
     if(currentPiece.pieceName === 'bishop'){
+      while(isOnBoard(index+9) && !isRightBorder(index)){ //check allowed downright diagonal movement 
+        if(isOccupied(index+9)){
+          console.log('occupied')
+          if(currentBoard[index+9].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+9].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+9].color = 'yellow';
+        index += 9;
+      }
+      index = copyIndex;
+      while(isOnBoard(index+7) && !isLeftBorder(index)){ //check allowed downleft diagonal movement 
+        if(isOccupied(index+7)){
+          console.log('occupied')
+          if(currentBoard[index+7].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+7].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+7].color = 'yellow';
+        index += 7;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-9) && !isRightBorder(index-9)){ //check allowed upleft diagonal movement 
+        if(isOccupied(index-9)){
+          console.log('occupied')
+          if(currentBoard[index-9].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-9].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-9].color = 'yellow';
+        index -= 9;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-7) && !isLeftBorder(index-7)){ //check allowed upright diagonal movement 
+        if(isOccupied(index-7)){
+          console.log('occupied')
+          if(currentBoard[index-7].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-7].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-7].color = 'yellow';
+        index -= 7;
+      }
       
+    
     }
 
     if(currentPiece.pieceName === 'king'){
@@ -204,7 +260,7 @@ const Game = () => {
   const handleSecondClick = (i) => {
     /* ANY UPDATES TO "currentBoard" WILL BE REACTIVELY DISPLAYED */
     const highlightedIndices = resetColors(currentBoard); //removes all highlights
-    
+    console.log(currentBoard[11]);
     
     
     if(highlightedIndices.includes(i)){
