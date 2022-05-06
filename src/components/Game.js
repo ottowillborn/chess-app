@@ -260,15 +260,16 @@ const Game = () => {
   const handleSecondClick = (i) => {
     /* ANY UPDATES TO "currentBoard" WILL BE REACTIVELY DISPLAYED */
     const highlightedIndices = resetColors(currentBoard); //removes all highlights
-    console.log(currentBoard[11]);
     
     
     if(highlightedIndices.includes(i)){
       if(currentBoard[i].pieceName !== ''){
+        
         if(firstClickedPiece.pieceColor === 'light'){
           const pushPiece = JSON.parse(JSON.stringify(currentBoard[i]));
           blackCapturedPieces.push(pushPiece);
           setBlackCapturedPieces(blackCapturedPieces);
+          console.log(blackCapturedPieces[0]);
         }else{
           const pushPiece = JSON.parse(JSON.stringify(currentBoard[i]));
           whiteCapturedPieces.push(pushPiece);
@@ -294,6 +295,10 @@ const Game = () => {
     return;
   };
 
+  const handleCapturedClick = (i) =>{
+    console.log(i);
+    return;
+  };
 
     
 
@@ -302,10 +307,10 @@ const Game = () => {
       <h1>Chess</h1>
       <Board squares={currentBoard} onClick={firstClick ? handleFirstClick : handleSecondClick} />
       <div>
-      <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel'>White Fallen Soldiers</FallenSoldiersTab>
+      <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel' onClick={handleCapturedClick}>White Fallen Soldiers</FallenSoldiersTab>
       </div>
       <div>
-      <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel'>Black Fallen Soldiers</FallenSoldiersTab>
+      <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel' onClick={handleCapturedClick}>Black Fallen Soldiers</FallenSoldiersTab>
       </div>
       <label className={playerTurn === '+' ? 'whitelabel' : 'blacklabel'}>It is {playerTurn === '+' ? 'white' : 'black'}'s turn</label>
     </>
