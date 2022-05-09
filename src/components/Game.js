@@ -80,7 +80,7 @@ const Game = () => {
         currentPiece.firstTurn = false;//change firstTurn
       }
       if(isOccupied(convertArithmetic(index, playerTurn, 7)) && (convertArithmetic(index, playerTurn, 7)%7) !== 1){//check left diagonal
-        //only highlight if piececolor !==
+        //only highlight if current piececolor !== clicked piececolor
         if(currentPiece.pieceColor !== currentBoard[convertArithmetic(index, playerTurn, 7)].pieceColor){
           currentBoard[convertArithmetic(index, playerTurn, 7)].color = 'yellow';
         }
@@ -153,32 +153,31 @@ const Game = () => {
     }
 
     if(currentPiece.pieceName === 'knight'){
-      const moves = [index+6, index+10, index+15, index+17, index-6, index-10, index-15, index-17];
+      const moves = [index+6, index+10, index+15, index+17, index-6, index-10, index-15, index-17];//array of all possible moves for knight
       const possibleMoves = [];
-      moves.forEach(move => {
+      moves.forEach(move => {//if move is on board, push into new array
         if(isOnBoard(move)){
           possibleMoves.push(move);
         }
       });
       
-      moves.length = 0;
-      possibleMoves.forEach(move => {
+      moves.length = 0;//clear old array
+      possibleMoves.forEach(move => {//if piece is not occupird or is opposite color, push into array
         if(currentBoard[move].pieceColor !== currentPiece.pieceColor){
           moves.push(move);
         }
       });
 
-      possibleMoves.length = 0;
-      moves.forEach(move => {
+      possibleMoves.length = 0;//clear old array
+      moves.forEach(move => {//if satisfies column properties, push into array
         const startColumn = index%8;
         const endColumn = move%8;
-        console.log(startColumn+" "+endColumn);
         if(startColumn-endColumn <= 2 && startColumn-endColumn >= -2){
           possibleMoves.push(move);
         }
       });
     
-      possibleMoves.forEach(move => {
+      possibleMoves.forEach(move => {//change color of all positions remaining in array
         currentBoard[move].color = 'yellow';
       });
       return;
@@ -275,7 +274,6 @@ const Game = () => {
           const pushPiece = JSON.parse(JSON.stringify(currentBoard[i]));
           blackCapturedPieces.push(pushPiece);
           setBlackCapturedPieces(blackCapturedPieces);
-          console.log(blackCapturedPieces[0]);
         }else{
           const pushPiece = JSON.parse(JSON.stringify(currentBoard[i]));
           whiteCapturedPieces.push(pushPiece);
