@@ -90,7 +90,7 @@ const Game = () => {
           currentBoard[convertArithmetic(index, playerTurn, 9)].color = 'yellow';
         }
       }
-      if(!isOccupied(currentBoard[convertArithmetic(index, playerTurn, 8)])){
+      if(!isOccupied(convertArithmetic(index, playerTurn, 8))){
         currentBoard[convertArithmetic(index, playerTurn, 8)].color = 'yellow';//always highlight 1 tile ahead, unless occupied
       }
       
