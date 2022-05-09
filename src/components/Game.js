@@ -61,8 +61,6 @@ const Game = () => {
       return false;
       }
     };
-//isRightBorder ((index+1)%8) === 0
-//isLeftBorder ((index)%8) !== 0
 
   const convertArithmetic = (index, addSub, increment) =>{
     if(addSub === '+'){
@@ -82,12 +80,20 @@ const Game = () => {
         currentPiece.firstTurn = false;//change firstTurn
       }
       if(isOccupied(convertArithmetic(index, playerTurn, 7)) && (convertArithmetic(index, playerTurn, 7)%7) !== 1){//check left diagonal
-        currentBoard[convertArithmetic(index, playerTurn, 7)].color = 'yellow';
+        //only highlight if piececolor !==
+        if(currentPiece.pieceColor !== currentBoard[convertArithmetic(index, playerTurn, 7)].pieceColor){
+          currentBoard[convertArithmetic(index, playerTurn, 7)].color = 'yellow';
+        }
       }
       if(isOccupied(convertArithmetic(index, playerTurn, 9))){//check right diagonal
-        currentBoard[convertArithmetic(index, playerTurn, 9)].color = 'yellow';
+        if(currentPiece.pieceColor !== currentBoard[convertArithmetic(index, playerTurn, 9)].pieceColor){
+          currentBoard[convertArithmetic(index, playerTurn, 9)].color = 'yellow';
+        }
       }
-      currentBoard[convertArithmetic(index, playerTurn, 8)].color = 'yellow';//always highlight 1 tile ahead
+      if(!isOccupied(currentBoard[convertArithmetic(index, playerTurn, 8)])){
+        currentBoard[convertArithmetic(index, playerTurn, 8)].color = 'yellow';//always highlight 1 tile ahead, unless occupied
+      }
+      
       return;
     }
 
