@@ -99,10 +99,7 @@ const Game = () => {
     }
   }
   const checkDiagonalMovement = (index, currentPiece, direction) =>{
-    console.log("checking diagonal");
     while((direction === 7 || direction === -9 ? !isLeftBorder(index) : !isRightBorder(index)) && isOnBoard(index+direction)){ 
-      console.log("entered loop");
-      console.log(index+direction);
       if(isOccupied(index+direction)){
         if(currentBoard[index+direction].pieceColor !== currentPiece.pieceColor){
           currentBoard[index+direction].color = 'yellow';
@@ -145,41 +142,28 @@ const Game = () => {
 
     if(currentPiece.pieceName === 'rook'){
       checkVerticalMovement(index, currentPiece, 8);
-      index = copyIndex;
       checkVerticalMovement(index, currentPiece, -8);
-      index = copyIndex;
       checkHorizontalMovement(index, currentPiece, 1);
-      index = copyIndex;
       checkHorizontalMovement(index, currentPiece, -1);
       return;
     }
 
     if(currentPiece.pieceName === 'bishop'){
       checkDiagonalMovement(index, currentPiece, 9);
-      index = copyIndex;
       checkDiagonalMovement(index, currentPiece, 7);
-      index = copyIndex;
       checkDiagonalMovement(index, currentPiece, -9);
-      index = copyIndex;
       checkDiagonalMovement(index, currentPiece, -7);
       return;
     }
 
     if(currentPiece.pieceName === 'queen'){
       checkVerticalMovement(index, currentPiece, 8);
-      index = copyIndex;
       checkVerticalMovement(index, currentPiece, -8);
-      index = copyIndex;
       checkHorizontalMovement(index, currentPiece, 1);
-      index = copyIndex;
       checkHorizontalMovement(index, currentPiece, -1);
-      index = copyIndex;
       checkDiagonalMovement(index, currentPiece, 9);
-      index = copyIndex;
-      checkDiagonalMovement(index, currentPiece, 7);
-      index = copyIndex;
+      checkDiagonalMovement(index, currentPiece, 7);    
       checkDiagonalMovement(index, currentPiece, -9);
-      index = copyIndex;
       checkDiagonalMovement(index, currentPiece, -7);
       return;
     }
@@ -223,7 +207,6 @@ const Game = () => {
   };
 
   const handleFirstClick = (i) => {
-    console.log(i);
     setPrevIndex(i); //store previous index for use in handleSecondClick
     setFirstClickedPiece(currentBoard[i]);//store clicked piece for use in handleSecondClick
     displayPossibleMoves(i);
