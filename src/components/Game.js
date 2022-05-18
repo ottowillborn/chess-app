@@ -9,6 +9,7 @@ const Game = () => {
   const boardLayout = CreateStartingLayout();
   const [firstClick, setFirstClick] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const[currentBoard, setCurrentBoard] = useState(CreateStartingLayout());
   const[firstClickedPiece, setFirstClickedPiece] = useState();
   const[playerTurn, setPlayerTurn] = useState('+');
@@ -16,7 +17,23 @@ const Game = () => {
   const[whiteCapturedPieces, setWhiteCapturedPieces] = useState([]);
   const[blackCapturedPieces, setBlackCapturedPieces] = useState([]);
   
- 
+  // useEffect(() => {
+  //   if(!isFirstRender){
+  //   console.log("board updated "+ playerTurn);
+  //     //if playerTurn === -, check all movement of white pieces and if king is under check
+      
+  //     for(var i = 0; i < 63; i++){
+  //       if(currentBoard[i].pieceColor === 'dark'){
+  //         console.log(currentBoard[i]);
+  //         displayPossibleMoves(i);
+  //       }
+  //    }
+  //    const highlights = resetColors([...currentBoard]);
+  //    console.log(highlights);
+  //    //if playerTurn === +, check all movement of black pieces and if king is under check
+  //   }
+  //   setIsFirstRender(false);
+  // },[currentBoard]);
  
   const resetColors = (board) =>{
     const highlightedIndices = []
@@ -114,10 +131,10 @@ const Game = () => {
 
   const displayPossibleMoves = (index) =>{
     const currentPiece = currentBoard[index];//hold current piece for comparisons
+    
     if(currentPiece.pieceName === 'pawn'){
       if(currentPiece.firstTurn){//if it is the pawns first move
         currentBoard[convertArithmetic(index, playerTurn, 16)].color = 'yellow';//highlight 2 tiles ahead
-        currentPiece.firstTurn = false;//change firstTurn
       }
       if(isOccupied(convertArithmetic(index, playerTurn, 7)) && (convertArithmetic(index, playerTurn, 7)%7) !== 1){//check left diagonal
         //only highlight if current piececolor !== clicked piececolor
@@ -243,25 +260,55 @@ const Game = () => {
       }
     currentBoard[i].pieceName = firstClickedPiece.pieceName;
     currentBoard[i].pieceColor = firstClickedPiece.pieceColor;
-    currentBoard[i].firstTurn = firstClickedPiece.firstTurn;
+    currentBoard[i].firstTurn = false;
     currentBoard[prevIndex].pieceName = '';
     currentBoard[prevIndex].pieceColor = '';
     }else{
       setFirstClick(!firstClick);
       return;
     }
+   
+   
     
+
     if(playerTurn === '+'){
+      for(i = 0; i < 63; i++){
+        if(currentBoard[i].pieceColor === 'light'){
+          displayPossibleMoves(i);
+        }
+     }
+      var possibleWhiteMoves = resetColors(currentBoard);
+      possibleWhiteMoves.forEach(index => {
+        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'dark'){
+          console.log("Black king under check");
+        }
+      });
+      console.log(possibleWhiteMoves);
       setPlayerTurn('-');
     }else{
+      for(i = 0; i < 63; i++){
+        if(currentBoard[i].pieceColor === 'dark'){
+          displayPossibleMoves(i);
+        }
+      }
+      var possibleBlackMoves = resetColors(currentBoard);
+      possibleBlackMoves.forEach(index => {
+        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'light'){
+          console.log("White king under check");
+        }
+      });
+      console.log(possibleBlackMoves);
       setPlayerTurn('+');
     }
+   
+
+    setCurrentBoard([...currentBoard]);
     setFirstClick(!firstClick);
     return;
   };
 
   const handleCapturedClick = (i) =>{
-    console.log(i);
+    
     return;
   };
 
