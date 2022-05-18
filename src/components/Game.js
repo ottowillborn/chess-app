@@ -70,6 +70,21 @@ const Game = () => {
     }
   };
 
+  const checkMovement = (index, currentPiece, direction) =>{
+    while(isOnBoard(index+direction) && !isRightBorder(index) && !isLeftBorder(index)){ 
+      if(isOccupied(index+direction)){
+        if(currentBoard[index+direction].pieceColor !== currentPiece.pieceColor){
+          currentBoard[index+direction].color = 'yellow';
+          break;
+        }else{
+          break;
+        }
+      }
+      currentBoard[index+direction].color = 'yellow';
+      index += direction;
+    }
+  }
+
   const displayPossibleMoves = (index) =>{
     const currentPiece = currentBoard[index];//hold current piece for comparisons
     const copyIndex = index;
@@ -98,57 +113,13 @@ const Game = () => {
     }
 
     if(currentPiece.pieceName === 'rook'){
-      while(isOnBoard(index+8) ){ //check allowed positive movement 
-        if(isOccupied(index+8)){
-          if(currentBoard[index+8].pieceColor !== currentPiece.pieceColor){
-            currentBoard[index+8].color = 'yellow';
-            break;
-          }else{
-            break;
-          }
-        }
-        currentBoard[index+8].color = 'yellow';
-        index += 8;
-      }
+      checkMovement(index, currentPiece, 8);
       index = copyIndex;
-      while(isOnBoard(index-8)){ //check allowed negative movement 
-        if(isOccupied(index-8)){
-          if(currentBoard[index-8].pieceColor !== currentPiece.pieceColor){
-            currentBoard[index-8].color = 'yellow';
-            break;
-          }else{
-            break;
-          }
-        }
-        currentBoard[index-8].color = 'yellow';
-        index -= 8;
-      }
+      checkMovement(index, currentPiece, -8);
       index = copyIndex;
-      while(isOnBoard(index+1) && !isRightBorder(index) ){ //check allowed right movement 
-        if(isOccupied(index+1)){
-          if(currentBoard[index+1].pieceColor !== currentPiece.pieceColor){
-            currentBoard[index+1].color = 'yellow';
-            break;
-          }else{
-            break;
-          }
-        }
-        currentBoard[index+1].color = 'yellow';
-        index += 1;
-      }
+      checkMovement(index, currentPiece, 1);
       index = copyIndex;
-      while(isOnBoard(index-1) && !isLeftBorder(index)){ //check allowed left movement 
-        if(isOccupied(index-1)){
-          if(currentBoard[index-1].pieceColor !== currentPiece.pieceColor){
-            currentBoard[index-1].color = 'yellow';
-            break;
-          }else{
-            break;
-          }
-        }
-        currentBoard[index-1].color = 'yellow';
-        index -= 1;
-      }
+      checkMovement(index, currentPiece, -1);
       return;
     }
 
@@ -248,7 +219,116 @@ const Game = () => {
     }
 
     if(currentPiece.pieceName === 'queen'){
+      while(isOnBoard(index+9) && !isRightBorder(index)){ //check allowed downright diagonal movement 
+        if(isOccupied(index+9)){
+          console.log('occupied')
+          if(currentBoard[index+9].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+9].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+9].color = 'yellow';
+        index += 9;
+      }
+      index = copyIndex;
+      while(isOnBoard(index+7) && !isLeftBorder(index)){ //check allowed downleft diagonal movement 
+        if(isOccupied(index+7)){
+          console.log('occupied')
+          if(currentBoard[index+7].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+7].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+7].color = 'yellow';
+        index += 7;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-9) && !isRightBorder(index-9)){ //check allowed upleft diagonal movement 
+        if(isOccupied(index-9)){
+          console.log('occupied')
+          if(currentBoard[index-9].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-9].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-9].color = 'yellow';
+        index -= 9;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-7) && !isLeftBorder(index-7)){ //check allowed upright diagonal movement 
+        if(isOccupied(index-7)){
+          console.log('occupied')
+          if(currentBoard[index-7].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-7].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-7].color = 'yellow';
+        index -= 7;
+      }
+      index = copyIndex;
+      while(isOnBoard(index+8)){ //check allowed positive movement 
+        if(isOccupied(index+8)){
+          if(currentBoard[index+8].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+8].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+8].color = 'yellow';
+        index += 8;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-8)){ //check allowed negative movement 
+        if(isOccupied(index-8)){
+          if(currentBoard[index-8].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-8].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-8].color = 'yellow';
+        index -= 8;
+      }
+      index = copyIndex;
+      while(isOnBoard(index+1) && !isRightBorder(index) ){ //check allowed right movement 
+        if(isOccupied(index+1)){
+          if(currentBoard[index+1].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index+1].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index+1].color = 'yellow';
+        index += 1;
+      }
+      index = copyIndex;
+      while(isOnBoard(index-1) && !isLeftBorder(index)){ //check allowed left movement 
+        if(isOccupied(index-1)){
+          if(currentBoard[index-1].pieceColor !== currentPiece.pieceColor){
+            currentBoard[index-1].color = 'yellow';
+            break;
+          }else{
+            break;
+          }
+        }
+        currentBoard[index-1].color = 'yellow';
+        index -= 1;
+      }
+      return;
       
+    
     }
   };
 
@@ -265,7 +345,6 @@ const Game = () => {
   const handleSecondClick = (i) => {
     /* ANY UPDATES TO "currentBoard" WILL BE REACTIVELY DISPLAYED */
     const highlightedIndices = resetColors(currentBoard); //removes all highlights
-    
     
     if(highlightedIndices.includes(i)){
       if(currentBoard[i].pieceName !== ''){
