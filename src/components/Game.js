@@ -1,4 +1,3 @@
-/*eslint no-eval: 0 */
 
 import React, { useState, useEffect, useRef } from 'react';
 import Board from "./Board";
@@ -9,9 +8,9 @@ const Game = () => {
   
   const boardLayout = CreateStartingLayout();
   const [firstClick, setFirstClick] = useState(true);
+  const [isError, setIsError] = useState(false);
   const[currentBoard, setCurrentBoard] = useState(CreateStartingLayout());
   const[firstClickedPiece, setFirstClickedPiece] = useState();
-  const[secondClickedPiece, setSecondClickedPiece] = useState();
   const[playerTurn, setPlayerTurn] = useState('+');
   const[prevIndex, setPrevIndex] = useState(0);
   const[whiteCapturedPieces, setWhiteCapturedPieces] = useState([]);
@@ -115,8 +114,6 @@ const Game = () => {
 
   const displayPossibleMoves = (index) =>{
     const currentPiece = currentBoard[index];//hold current piece for comparisons
-    const copyIndex = index;
-
     if(currentPiece.pieceName === 'pawn'){
       if(currentPiece.firstTurn){//if it is the pawns first move
         currentBoard[convertArithmetic(index, playerTurn, 16)].color = 'yellow';//highlight 2 tiles ahead
@@ -207,8 +204,19 @@ const Game = () => {
   };
 
   const handleFirstClick = (i) => {
+    setIsError(false);
     setPrevIndex(i); //store previous index for use in handleSecondClick
     setFirstClickedPiece(currentBoard[i]);//store clicked piece for use in handleSecondClick
+    if(playerTurn === '+'){
+      if(currentBoard[i].pieceColor !== 'light'){
+        setIsError(true);
+        return;
+      }
+    }else if(currentBoard[i].pieceColor !== 'dark'){
+      setIsError(true);
+      return;
+    }
+    
     displayPossibleMoves(i);
     setFirstClick(!firstClick);
     return;
@@ -217,6 +225,7 @@ const Game = () => {
 
   const handleSecondClick = (i) => {
     /* ANY UPDATES TO "currentBoard" WILL BE REACTIVELY DISPLAYED */
+    
     const highlightedIndices = resetColors(currentBoard); //removes all highlights
     
     if(highlightedIndices.includes(i)){
@@ -263,11 +272,14 @@ const Game = () => {
       <h1>Chess</h1>
       <Board squares={currentBoard} onClick={firstClick ? handleFirstClick : handleSecondClick} />
       <div>
-      <label>White Fallen Soldiers</label>
-      <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
-      <label>Black Fallen Soldiers</label>
-      <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
-      <label className={playerTurn === '+' ? 'whitelabel' : 'blacklabel'}>It is {playerTurn === '+' ? 'white' : 'black'}'s turn</label>
+        <label>White Fallen Soldiers</label>
+        <FallenSoldiersTab soldiers={whiteCapturedPieces} color='wfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
+        <label>Black Fallen Soldiers</label>
+        <FallenSoldiersTab soldiers={blackCapturedPieces} color='bfslabel' onClick={handleCapturedClick}></FallenSoldiersTab>
+        <label className={playerTurn === '+' ? 'whitelabel' : 'blacklabel'}>It is {playerTurn === '+' ? 'white' : 'black'}'s turn</label>
+      </div>
+      <div>
+        <label className='errorlabel'>{isError ? 'Please select a piece of your colour' : ''}</label>
       </div>
     </>
   );

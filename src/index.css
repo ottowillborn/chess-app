@@ -72,9 +72,19 @@ label{
   position:relative; 
   left:540px; 
   top:-540px;
-  width: 500px;
   margin-top: 30px;
   text-align: center;
+}
+
+.errorlabel{
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  background-color: red;
+  left:300px; 
+  top:-400px;
+  align-items: center;
+  justify-content: center;
 }
 
 .blacklabel{
