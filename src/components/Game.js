@@ -263,37 +263,34 @@ const Game = () => {
     currentBoard[i].firstTurn = false;
     currentBoard[prevIndex].pieceName = '';
     currentBoard[prevIndex].pieceColor = '';
-    }else{
+    }else{ //unallowed click, rehandle
       setFirstClick(!firstClick);
       return;
     }
    
-   
-    
-
-    if(playerTurn === '+'){
+    if(playerTurn === '+'){ //if it is whites turn
       for(i = 0; i < 63; i++){
-        if(currentBoard[i].pieceColor === 'light'){
+        if(currentBoard[i].pieceColor === 'light'){ //find all possible white moves going into next turn
           displayPossibleMoves(i);
         }
      }
       var possibleWhiteMoves = resetColors(currentBoard);
       possibleWhiteMoves.forEach(index => {
-        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'dark'){
+        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'dark'){ //if opposing king is a possible next turn move, identify that it is under check
           console.log("Black king under check");
         }
       });
       console.log(possibleWhiteMoves);
       setPlayerTurn('-');
-    }else{
+    }else{ // it is blacks turn
       for(i = 0; i < 63; i++){
-        if(currentBoard[i].pieceColor === 'dark'){
+        if(currentBoard[i].pieceColor === 'dark'){//find all possible black moves going into next turn
           displayPossibleMoves(i);
         }
       }
       var possibleBlackMoves = resetColors(currentBoard);
       possibleBlackMoves.forEach(index => {
-        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'light'){
+        if(currentBoard[index].pieceName === 'king' && currentBoard[index].pieceColor === 'light'){//if opposing king is a possible next turn move, identify that it is under check
           console.log("White king under check");
         }
       });
